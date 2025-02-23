@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    
+    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+    
+    <title>3rd Anniversary !!</title>
+    
+    <style>
+        
+@import url('https://fonts.googleapis.com/css2?family=Chela+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*,
+*::before,
+*::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+    background-color: #000;
+    color: #eee;
+    font-family: Poppins;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+.carousel {
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    overflow: hidden;
+}
+
+.carousel .list {
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    pointer-events: none;
+}
+
+.carousel .list .item {
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    background: var(--bg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-origin: content-box;
+    opacity: 0;
+    filter: blur(33px);
+    transition: 1s ease;
+}
+
+.carousel .list .item.active {
+    opacity: 1;
+    filter: blur(0);
+    transition: 1s ease;
+}
+
+.carousel .item .content {
+    width: 50vw;
+    height: 100vh;
+    position: absolute;
+    padding: 8px;
+    pointer-events: none;
+}
+
+.carousel .item .content .para {
+    bottom: 150px;
+    position: absolute;
+    width: calc(100% - 16px);
+    text-align: center;
+    font-size: 22px;
+    color: #fffff0;
+    text-shadow: 0 0 5px #081b29, 0 0 10px #081b29, 0 0 15px #081b29;
+    font-weight: bolder;
+    pointer-events: none;
+}
+
+.carousel .item .content .para div {
+    filter: blur(33px);
+    transform: translateY(200px);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.carousel .item.active .content .para div {
+    filter: blur(0);
+    transform: translateY(0);
+    opacity: 1;
+    transition: 0.8s;
+    transition-delay: calc(0.2s * var(--i));
+}
+
+.carousel .thumbnail {
+    position: absolute;
+    height: 116px;
+    top: 16px;
+    left: 60vw;
+    z-index: 9;
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    padding: 8px;
+    background-color: rgb(0, 0, 0, 0.4);
+    border-radius: 16px;
+    backdrop-filter: blur(16px);
+    overflow: hidden;
+}
+
+.carousel .thumbnail .item {
+    height: 100px;
+    width: 150px;
+    background: var(--bg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-origin: content-box;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 3px #ffffff, 0 0 5px #ffffff, 0 0 8px #081b29, 0 0 10px #081b29;
+}
+
+.carousel .thumbnail .item.slide {
+    animation: slide 0.5s forwards;
+}
+
+@keyframes slide {
+    from { transform: translateX(0); }
+    to { transform: translateX(-162px); }
+}
+
+#next {
+    position: absolute;
+    left: 25vw;
+    transform: translateX(-50%) scale(1);
+    bottom: 20px;
+    height: 40px;
+    width: 80px;
+    background: transparent;
+    outline: none;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 0 5px #ffffff, 0 0 10px #081b29, 0 0 15px #081b29, 0 0 20px #081b29;
+    backdrop-filter: blur(12px);
+    color: #fffff0;
+    font-size: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s ease-in-out;
+    
+    &:hover {
+        transform: translateX(-50%) scale(1.3);
+        background: radial-gradient(circle, #feda75, #d62976, #4f5bd5);
+        color: #081b29;
+        transition: 0.3s ease-in-out;
+    }
+}
+
+.counter {
+    height: 100vh;
+    width: 100vw;
+    z-index: 99;    
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: url('image/pen.jpg');
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    opacity: 0;
+    pointer-events: none;
+    filter: blur(35px);
+    transition: 0.8s ease;
+    transition-delay: 4s;
+}
+
+.counter.active {
+    opacity: 1;
+    pointer-events: none;
+    filter: blur(0);
+    transition: 0.8s ease;
+}
+
+.counter .items {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 80px;
+    width: 560px;
+    display: grid;
+    grid-template-columns: 80px 80px 80px 80px 80px 80px;
+    grid-template-rows: 80px;
+    grid-column-gap: 16px;
+}
+
+.counter .items .item {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    border-radius: 12px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 0 5px #081b29, 0 0 10px #081b29;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    filter: blur(33px);
+    transform: translateY(200px) scale(0.3);
+    transition: 0.8s ease;
+}
+
+.counter.active .items .item {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+    transition: 0.8s ease;
+    transition-delay: calc(0.1s * var(--i));
+}
+
+.counter .items .item .tt {
+    position: absolute;
+    transform: translateY(-16px);
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.counter .items .item .ty {
+    position: absolute;
+    transform: translateY(8px);
+    font-size: 24px;
+    font-weight: bolder;
+}
+
+.counter .wish {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%,200px);    
+    width: 100%;
+    text-align: center;
+    font-size: 70px;
+    font-family: "Chela One", serif;
+    font-weight: 400;
+    font-style: normal;
+    background: radial-gradient(circle, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5, #3b5998, #00aced, #517fa4, #dd4b39, #f46f30, #ff5722, #ff9800, #ffeb3b, #8bc34a, #009688, #00bcd4, #2196f3, #3f51b5, #673ab7, #9c27b0);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientMove 20s linear infinite;
+    opacity: 0;
+    pointer-events: none;
+    filter: blur(33px);
+    transition: 0.8s ease;
+    transition-delay: 4s;
+}
+
+.counter.active .wish {
+    transition: 0.8s ease;
+    filter: blur(0);
+    opacity: 1;
+    transform: translate(-50%,0);
+    transition-delay: 2.5s;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.load {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    z-index: 999;
+    background: #081b29;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    filter: blur(40px);
+    pointer-events: none;
+    transition: 1s ease;
+    overflow: hidden;
+}
+
+.load.active {
+    filter: blur(0);
+    opacity: 1;
+    pointer-events: auto;
+    transition: 1s ease;
+}
+
+#loader {
+    opacity: 0;
+    pointer-events: none;
+    filter: blur(30px);
+    transition: 0.5s ease;
+}
+
+#loader.active {
+    opacity: 1;
+    filter: blur(0);
+    transition: 0.5s ease;
+}
+
+#opener {
+    height: 80px;
+    width: 200px;
+    background: #fffff0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%) scale(1);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 8px;
+    border: none;
+    outline: none;
+    font-size: 30px;
+    font-family: "Chela One", serif;
+    font-weight: 400;
+    font-style: normal;
+    transition: 0.3s ease;
+    opacity: 0;
+    pointer-events: none;
+    filter: blur(30px);
+    
+    &:hover {
+        transform: translate(-50%,-50%) scale(1.5);
+        background: radial-gradient(circle, #feda75, #d62976, #4f5bd5);
+        transition: 0.3s ease;
+    }
+}
+
+#opener.active {
+    opacity: 1;
+    pointer-events: auto;
+    filter: blur(0);
+    transition: 0.3s ease;
+}        
+
+    </style>
+</head>
+<body>
+    <div class="load active">
+        <dotlottie-player id="loader" class="loader active" src="https://lottie.host/120db4c2-11a2-4466-aaca-97aee60eb5f6/1R8MvxKht3.lottie" background="transparent" speed="1" style="width: 500px; height: 500px" loop autoplay></dotlottie-player>
+        <div>
+            <button id="opener" class="play-button" onclick="document.getElementById('audio').play();">Open Card</button>
+            <audio id="audio" class="audio-player" style="opacity: 0; pointer-events: none;" loop>
+                <source src="music.mp3" type="audio/mp3">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    </div>
+    
+    <div class="carousel">
+        <div class="list">
+            <div class="item" style="--bg:url('image/1.jpg');">
+                <div class="content">
+                    <div class="para">
+                        <div style="--i:1;">Three years have passed, yet love still grows,</div>
+                        <div style="--i:2;">Like rivers deep where passion flows.</div>
+                        <div style="--i:3;">Through highs and lows, through dark and light,</div>
+                        <div style="--i:4;">You’ve been my joy, my heart's delight.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item" style="--bg:url('image/2.jpg');">
+                <div class="content">
+                    <div class="para">
+                        <div style="--i:1;">Sweety, your voice, a melody sweet,</div>
+                        <div style="--i:2;">A song of love with every beat.</div>
+                        <div style="--i:3;">It soothes my soul, it calms my mind,</div>
+                        <div style="--i:4;">A sound so pure, so rare to find.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item" style="--bg:url('image/3.jpg');">
+                <div class="content">
+                    <div class="para">
+                        <div style="--i:1;">The way you walk, the way you stand,</div>
+                        <div style="--i:2;">The softest touch of your warm hand.</div>
+                        <div style="--i:3;">Each little glance, each gentle sigh,</div>
+                        <div style="--i:4;">Leaves me breathless, soaring high.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item" style="--bg:url('image/4.jpg');">
+                <div class="content">
+                    <div class="para">
+                        <div style="--i:1;">Sona, your eyes, they shine so bright,</div>
+                        <div style="--i:2;">Like stars that dance in endless night.</div>
+                        <div style="--i:3;">They pull me in, they make me stay,</div>
+                        <div style="--i:4;">I lose myself, I drift away.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item" style="--bg:url('image/5.jpg');">
+                <div class="content">
+                    <div class="para">
+                        <div style="--i:1;">Your lips, like honey, warm and sweet,</div>
+                        <div style="--i:2;">A place where love and longing meet.</div>
+                        <div style="--i:3;">Each kiss ignites a burning flame,</div>
+                        <div style="--i:4;">A spark that whispers out your name.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item" style="--bg:url('image/6.jpg');">
+                <div class="content">
+                    <div class="para">
+                        <div style="--i:1;">Cupcake, your touch, so soft, so light,</div>
+                        <div style="--i:2;">It sets my world in flames so bright.</div>
+                        <div style="--i:3;">Through endless nights and golden days,</div>
+                        <div style="--i:4;">Your love consumes me in its blaze.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item" style="--bg:url('image/7.jpg');">
+                <div class="content">
+                    <div class="para">
+                        <div style="--i:1;">In your embrace, I feel so free,</div>
+                        <div style="--i:2;">You are the home, the world to me.</div>
+                        <div style="--i:3;">No need to search, no need to roam,</div>
+                        <div style="--i:4;">For in your arms, I've found my home.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item" style="--bg:url('image/8.jpg');">
+                <div class="content">
+                    <div class="para">
+                        <div style="--i:1;">You trust in me, you stand so tall,</div>
+                        <div style="--i:2;">With love so pure, you give your all.</div>
+                        <div style="--i:3;">With every tear, with every smile,</div>
+                        <div style="--i:4;">You make this fleeting life worthwhile.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item" style="--bg:url('image/9.jpg');">
+                <div class="content">
+                    <div class="para">
+                        <div style="--i:1;">For choosing me, I hold you dear,</div>
+                        <div style="--i:2;">No greater love could be so clear.</div>
+                        <div style="--i:3;">Your faith, your heart, your gentle grace,</div>
+                        <div style="--i:4;">Are gifts no time could ever replace.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item" style="--bg:url('image/10.jpg');">
+                <div class="content">
+                    <div class="para">
+                        <div style="--i:1;">The nights we've shared, the whispered sighs,</div>
+                        <div style="--i:2;">Where love speaks loud with longing cries.</div>
+                        <div style="--i:3;">Each stolen touch, each breath so deep,</div>
+                        <div style="--i:4;">Are memories my heart will keep.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item" style="--bg:url('image/11.jpg');">
+                <div class="content">
+                    <div class="para">
+                        <div style="--i:1;">Rasmalai, my sweetest bliss,</div>
+                        <div style="--i:2;">Your love, your scent, your every kiss.</div>
+                        <div style="--i:3;">You fill my life with endless light,</div>
+                        <div style="--i:4;">A passion burning ever bright.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item" style="--bg:url('image/12.jpg');">
+                <div class="content">
+                    <div class="para">
+                        <div style="--i:1;">Jaan, you’re perfect as you are,</div>
+                        <div style="--i:2;">My dearest love, my brightest star.</div>
+                        <div style="--i:3;">Not one thing would I change in you,</div>
+                        <div style="--i:4;">For every piece is bright and true.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item" style="--bg:url('image/13.jpg');">
+                <div class="content">
+                    <div class="para">
+                        <div style="--i:1;">You lift me up, you make me strong,</div>
+                        <div style="--i:2;">With you, my love, I do belong.</div>
+                        <div style="--i:3;">Through trials fierce and moments bright,</div>
+                        <div style="--i:4;">You are my joy, my soul’s delight.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item"  style="--bg:url('image/14.jpg');">
+                <div class="content">
+                    <div class="para">
+                        <div style="--i:1;">Darling, three years, and yet I see,</div>
+                        <div style="--i:2;">Your love still sets my spirit free.</div>
+                        <div style="--i:3;">Each whispered word, each touch so slight,</div>
+                        <div style="--i:4;">Still fills my world with endless light.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item" style="--bg:url('image/15.jpg');">
+                <div class="content">
+                    <div class="para">
+                        <div style="--i:1;">I cherish all our days before,</div>
+                        <div style="--i:2;">And all the ones I long for more.</div>
+                        <div style="--i:3;">For every laugh, for every tear,</div>
+                        <div style="--i:4;">I’ll hold you close, forever near.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item" style="--bg:url('image/16.jpg');">
+                <div class="content">
+                    <div class="para">
+                        <div style="--i:1;">My honey, tonight, just you and I,</div>
+                        <div style="--i:2;">Under the stars, beneath the sky.</div>
+                        <div style="--i:3;">With lips so close and hearts so tight,</div>
+                        <div style="--i:4;">We melt as one in love’s pure light.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item" style="--bg:url('image/17.jpg');">
+                <div class="content">
+                    <div class="para">
+                        <div style="--i:1;">And as I whisper in your ear,</div>
+                        <div style="--i:2;">A vow, a promise, strong, sincere—</div>
+                        <div style="--i:3;">I love you now, I’ll love you still,</div>
+                        <div style="--i:4;">Through every dawn, through every thrill.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item" style="--bg:url('image/18.jpg');">
+                <div class="content">
+                    <div class="para">
+                        <div style="--i:1;">Jaan, you are my breath, my guide,</div>
+                        <div style="--i:2;">No road too long, no world too wide.</div>
+                        <div style="--i:3;">Through time, through life, through all we do,</div>
+                        <div style="--i:4;">I’ll always stand in love with you.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item" style="--bg:url('image/19.jpg');">
+                <div class="content">
+                    <div class="para">
+                        <div style="--i:1;">The way you care, so soft, so true,</div>
+                        <div style="--i:2;">Like a mother’s love, yet something new.</div>
+                        <div style="--i:3;">You guard my heart, you hold me tight,</div>
+                        <div style="--i:4;">You make my darkest days feel bright.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item" style="--bg:url('image/20.jpg');">
+                <div class="content">
+                    <div class="para">
+                        <div style="--i:1;">With every breath, with every touch,</div>
+                        <div style="--i:2;">My darling love, you mean so much.</div>
+                        <div style="--i:3;">With passion, fire, and love so bright,</div>
+                        <div style="--i:4;">I kiss you now—my heart’s delight.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="thumbnail">
+            <div class="item" style="--bg:url('image/2.jpg');"></div>
+            <div class="item" style="--bg:url('image/3.jpg');"></div>
+            <div class="item" style="--bg:url('image/4.jpg');"></div>
+            <div class="item" style="--bg:url('image/5.jpg');"></div>
+            <div class="item" style="--bg:url('image/6.jpg');"></div>
+            <div class="item" style="--bg:url('image/7.jpg');"></div>
+            <div class="item" style="--bg:url('image/8.jpg');"></div>
+            <div class="item" style="--bg:url('image/9.jpg');"></div>
+            <div class="item" style="--bg:url('image/10.jpg');"></div>
+            <div class="item" style="--bg:url('image/11.jpg');"></div>
+            <div class="item" style="--bg:url('image/12.jpg');"></div>
+            <div class="item" style="--bg:url('image/13.jpg');"></div>
+            <div class="item" style="--bg:url('image/14.jpg');"></div>
+            <div class="item" style="--bg:url('image/15.jpg');"></div>
+            <div class="item" style="--bg:url('image/16.jpg');"></div>
+            <div class="item" style="--bg:url('image/17.jpg');"></div>
+            <div class="item" style="--bg:url('image/18.jpg');"></div>
+            <div class="item" style="--bg:url('image/19.jpg');"></div>
+            <div class="item" style="--bg:url('image/20.jpg');"></div>
+        </div>
+
+        <button id="next"><ion-icon name="caret-forward-outline"></ion-icon></button>
+    </div>
+    
+    <div class="counter">
+        <div class="wish">Happy 3<sup>rd</sup> Anniversary</div>
+        <div class="items">
+            <span class="item" style="--i:9;">
+                <span class="tt">Years</span>
+                <span class="ty" id="Y1"></span>
+            </span>
+            <span class="item" style="--i:8;">
+                <span class="tt">Months</span>
+                <span class="ty" id="M1"></span>
+            </span>
+            <span class="item" style="--i:7;">
+                <span class="tt">Days</span>
+                <span class="ty" id="D1"></span>
+            </span>
+            <span class="item" style="--i:6;">
+                <span class="tt">Hours</span>
+                <span class="ty" id="h1"></span>
+            </span>
+            <span class="item" style="--i:5;">
+                <span class="tt">Minutes</span>
+                <span class="ty" id="m1"></span>
+            </span>
+            <span class="item" style="--i:4;">
+                <span class="tt">Seconds</span>
+                <span class="ty" id="s1"></span>
+            </span>
+        </div>
+    </div>
+    
+    <script>
+        
+function checkMediaLoaded() { 
+    const interval = setInterval(() => { const images = document.querySelectorAll("img"); const audios = document.querySelectorAll("audio"); const allMedia = [...images, ...audios];
+        if (allMedia.length === 0 || allMedia.every(media => media.complete || media.readyState >= 2)) {
+            clearInterval(interval);
+            setTimeout(() => {
+                document.getElementById("loader").classList.remove("active");
+                document.getElementById("opener").classList.add("active");           
+            }, 2000 );
+        }
+    }, 2000);
+}
+
+document.addEventListener("DOMContentLoaded", checkMediaLoaded);
+
+document.getElementById("opener").addEventListener("click", function () {
+    const elem = document.documentElement;
+    if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+    } else if (elem.mozRequestFullScreen) {
+        elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullscreen) {
+        elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) {
+        elem.msRequestFullscreen();
+    }
+    
+    document.querySelector(".load").classList.remove("active");
+    const firstChild = document.querySelector(".list > *");
+    if (firstChild) {
+        firstChild.classList.add("active");
+    }
+    
+    document.querySelector("audio").play();
+});
+
+
+let counter = 1; 
+
+document.getElementById("next").addEventListener("click", function() {
+    if (counter >= 20) {
+        document.querySelector(".counter").classList.add("active");
+        return;
+    }
+
+    let nextButton = this;
+    nextButton.disabled = true; // Disable button immediately
+
+    let list = document.querySelector(".list");
+    let thumbnails = document.querySelector(".thumbnail");
+    let activeItem = document.querySelector(".list .item.active");
+
+    if (activeItem) {
+        let nextItem = activeItem.nextElementSibling;
+        activeItem.classList.remove("active");
+
+        if (nextItem) {
+            nextItem.classList.add("active");
+
+            let firstThumbnail = thumbnails.querySelector(".item");
+            if (firstThumbnail) {      
+                let remainingThumbnails = thumbnails.querySelectorAll(".item");
+                remainingThumbnails.forEach((thumb, index) => {
+                    setTimeout(() => {
+                        thumb.classList.add("slide");
+                    }, index * 150);
+                });
+
+                setTimeout(() => {
+                    remainingThumbnails.forEach(thumb => thumb.classList.remove("slide"));
+                    firstThumbnail.remove();         
+                    if (!thumbnails.querySelector(".item")) {
+                        thumbnails.remove();
+                    }  
+                    counter++;
+                    nextButton.disabled = false; 
+                }, remainingThumbnails.length * 150 + 500 );
+            } 
+        }
+    }
+});
+
+
+function updateTime1() {
+    const startTime = new Date('2022-02-26T06:53:00');
+    const currentTime = new Date(); 
+
+    let diffYears = currentTime.getFullYear() - startTime.getFullYear();
+    let diffMonths = currentTime.getMonth() - startTime.getMonth();
+    let diffDays = currentTime.getDate() - startTime.getDate();
+    let diffHours = currentTime.getHours() - startTime.getHours();
+    let diffMinutes = currentTime.getMinutes() - startTime.getMinutes();
+    let diffSeconds = currentTime.getSeconds() - startTime.getSeconds();
+
+    // Adjust for negative values
+    if (diffSeconds < 0) {
+        diffSeconds += 60;
+        diffMinutes--;
+    }
+    if (diffMinutes < 0) {
+        diffMinutes += 60;
+        diffHours--;
+    }
+    if (diffHours < 0) {
+        diffHours += 24;
+        diffDays--;
+    }
+    if (diffDays < 0) {
+        const previousMonth = new Date(currentTime.getFullYear(), currentTime.getMonth(), 0).getDate();
+        diffDays += previousMonth;
+        diffMonths--;
+    }
+    if (diffMonths < 0) {
+        diffMonths += 12;
+        diffYears--;
+    }
+
+    document.getElementById('Y1').textContent = diffYears;
+    document.getElementById('M1').textContent = diffMonths;
+    document.getElementById('D1').textContent = diffDays;
+    document.getElementById('h1').textContent = diffHours;
+    document.getElementById('m1').textContent = diffMinutes;
+    document.getElementById('s1').textContent = diffSeconds;
+}
+
+setInterval(updateTime1, 1000);        
+    </script>
+    
+</body>
+</html>
